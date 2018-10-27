@@ -7,12 +7,102 @@ namespace CSharpAvanzado
 {
     class MainClass
     {
+        #region FIELDS
         private static string _sentence = "I love cats";
         private static string[] _catNames = { "Lucky", "Bella", "Luna", "Oreo", "Simba", "Toby", "Loki", "Oscar" };
         private static int[] _numbers = { 5, 6, 3, 2, 1, 5, 6, 7, 8, 4, 234, 54, 14, 653, 3, 4, 5, 6, 7 };
         private static object[] _mix = { 1, "string", 'd', new List<int>() { 1, 2, 3, 4 }, new List<int>() { 5, 2, 3, 4 }, "dd", 's', "Hello Kitty", 1, 2, 3, 4, };
+        #endregion
+
+        #region PROPERTIES
+
+        #endregion
 
         public static void Main(string[] args)
+        {
+            RunDelegates();
+        }
+        #region DELEGATES
+
+        //ACTIONS: No regresan valores, pero reciben
+        static Action<string> FilteringAction;
+
+        //FUNCTIONS: Regresan y reciben.
+        public static Func<string, bool> FilteringFunc { get; set; }
+
+        //public delegate bool Filters(string name);
+        //private static Filters _filters;
+
+        private static void RunDelegates()
+        {
+            //FilteringFunc = MoreThanFive;
+            FilteringAction = PrintAction;
+            Print(FilteringAction);
+        }
+
+        private static void Print(Action<string> func)
+        {
+            func.Invoke("Hola Mundo");
+        }
+
+        private static void PrintAction(string text)
+        {
+            Console.WriteLine(text);
+        }
+
+        private static bool LessThanFive(string name)
+        {
+            return name.Length < 5;
+        }
+
+        private static bool MoreThanFive(string name)
+        {
+            return name.Length > 5;
+        }
+
+        private static bool SameThanFive(string name)
+        {
+            return name.Length == 5;
+        }
+
+        #endregion
+
+        #region GENERICS
+
+        private static int _first = 2;
+        private static int _second = 4;
+
+        private static void RunGenerics()
+        {
+            var person1 = new Person("Tod", 180, 70, Gender.Male);
+            var person2 = new Person("John", 180, 88, Gender.Male);
+
+            //var result = CompareNumbers(_first, _second);
+            var result = CompareValues<Person>(person1, person2);
+            Console.WriteLine(result);
+        }
+
+        private static bool CompareValues<T>(T one, T two) where T : IComparable<T>
+        {
+            return one.CompareTo(two) == 0;
+            //Si -1 one < two
+            //Si 1 one > two
+            //Si 0 one == two
+        }
+
+        private static bool CompareNumbers(int firstNumber, int secondNumber)
+        {
+            return firstNumber < secondNumber;
+        }
+
+        private static bool CompareStr(string firstStr, string secondStr)
+        {
+            return firstStr.Equals(secondStr);
+        }
+        #endregion
+
+        #region LINQ
+        private static void RunLinq()
         {
             List<Person> people = new List<Person>()
             {
@@ -87,7 +177,8 @@ namespace CSharpAvanzado
             //Definir las condicionales - where
             //Tomar la salida fitlra - select
 
-
         }
+        #endregion
+
     }
 }

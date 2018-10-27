@@ -1,7 +1,7 @@
 ﻿using System;
 namespace CSharpAvanzado.Models
 {
-    internal class Person
+    internal class Person : IComparable<Person>
     {
         private string _name;
         private int _height;
@@ -58,6 +58,20 @@ namespace CSharpAvanzado.Models
         public override string ToString()
         {
             return $"{Name} {Height}";
+        }
+
+        public int CompareTo(Person otherPerson)
+        {
+            if (Height < otherPerson.Height)
+            {
+                return -1;
+            }
+            if (Height == otherPerson.Height)
+            {
+                return 0;
+            }
+            else
+                return 1;
         }
     }
 
