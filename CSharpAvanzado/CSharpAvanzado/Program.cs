@@ -17,11 +17,62 @@ namespace CSharpAvanzado
         #region PROPERTIES
 
         #endregion
+        private static int _maxShoots = 10;
 
         public static void Main(string[] args)
         {
-            RunDelegates();
+            RunEvents();
         }
+
+        #region EVENTS
+        private static void RunEvents()
+        {
+
+            var shooter = new Shooter();
+
+            shooter.KillingCompleted += OnKillingCompleted;
+            shooter.KillingCompleted += OnKillingCompleted;
+            shooter.KillingCompleted += OnKillingCompleted;
+
+            StartShooting(shooter);
+
+            //Publisher y un Subscriber
+
+            //Anatomía de un Event - Publisher
+
+            //1.Delegate que coincida con la firma del Event
+            //2. Event del mismo tipo que el Delegate
+            //3. Alcanzar el evento en algún punto
+
+            //Anatomía de un Event - Subscriber
+
+            //1. Un método que cuadre o coincida con la firma
+            //2. Subscribirse al evento.
+
+            //Ayudan al desacople entre código.
+        }
+
+        private static void StartShooting(Shooter shooter)
+        {
+            if (shooter == null) return;
+
+            for (int i = 0; i < 100; i++)
+            {
+                if (i == _maxShoots)
+                {
+                    shooter.OnShoot();
+                    return;
+                }
+            }
+
+        }
+
+        private static void OnKillingCompleted(object sender, ShooterEventArgs args)
+        {
+            Console.WriteLine("RECARGA!!!!!!!!!!!!!!!!!");
+        }
+        #endregion
+
         #region DELEGATES
 
         //ACTIONS: No regresan valores, pero reciben
@@ -134,7 +185,7 @@ namespace CSharpAvanzado
             //orderby cat descending
             //select cat;
 
-            var catsWithA = _catNames.Where(c => (c.Contains("a")) && (c.Length < 5));
+            var catsWithA = _catNames?.Where(c => (c.Contains("a")) && (c.Length < 5));
 
             //Console.WriteLine(string.Join(" , ", persons));
 
