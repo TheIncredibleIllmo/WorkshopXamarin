@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CSharpAvanzado.Models;
 
 namespace CSharpAvanzado
@@ -18,11 +20,39 @@ namespace CSharpAvanzado
 
         #endregion
         private static int _maxShoots = 10;
+        private static int _counter = 0;
 
         public static void Main(string[] args)
         {
-            RunEvents();
+            ProcessAsync();
         }
+
+        #region ASYNC
+        private static async Task ProcessAsync()
+        {
+            await Counting();
+            Console.WriteLine("Tarea terminada");
+        }
+
+        private static Task Counting()
+        {
+            var longTask = Task.Factory.StartNew(() =>
+            {
+                int myCount = 0;
+                for (int i = 0; i < 100; i++)
+                {
+                    Thread.Sleep(500);
+                    Console.WriteLine($"{myCount}");
+                    myCount++;
+                }
+            });
+
+            return longTask;
+        }
+        #endregion
+
+
+
 
         #region EVENTS
         private static void RunEvents()
