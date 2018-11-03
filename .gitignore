@@ -2,4 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/WorkshopXamarin/v15/.suo
+/.vs
+/CSharpAvanzado/.vs
+/CSharpAvanzado/CSharpAvanzado/bin
+/CSharpAvanzado/CSharpAvanzado/obj
+/XamarinAndroidModule/bin
+/XamarinAndroidModule/obj
